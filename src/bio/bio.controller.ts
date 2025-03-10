@@ -1,12 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from 'src/app.service';
+import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { BioService } from 'src/bio/bio.service';
 
-@Controller('/')
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@Controller('/bio')
+export class BioController {
+  constructor(private readonly bioService: BioService) {}
 
-  @Get()
-  async getTable() {
-    return this.appService.getTable();
+  @Get(':username')
+  async getBio(@Param() username: Record<string, string>) {
+    return this.bioService.getUserBio(username.username);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch(':username')
+  async editBio(
+    @Param() username: Record<string, string>,
+    @Body() bio: Record<string, string>,
+  ) {
+    return this.bioService.editUserBio(username.username, bio.bio);
   }
 }
