@@ -1,42 +1,59 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import bcrypt from 'bcrypt';
 import { User } from 'src/users/interfaces/users.interface';
 
 @Injectable()
 export class UsersService {
   constructor(@Inject('POSTGRES_POOL') private readonly sql: any) {}
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async findOne(username: string): Promise<User[] | undefined> {
+    try {
+      const user = await this.sql`
+    SELECT * FROM users WHERE username=${username}`;
+      return user;
+    } catch (error) {
+      if (error instanceof HttpException)
+        throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 
   async addOne(username: string, password: string) {
-    if (this.users.find((user) => user.username === username))
-      throw new HttpException('User Already Exists', HttpStatus.FORBIDDEN);
-    this.users.push({
-      userId: this.users.length + 1,
-      username,
-      password,
-    });
+    try {
+      const userExists = await this
+        .sql`SELECT EXISTS(SELECT 1 FROM users WHERE username=${username})`;
+      console.log('🚀 ~ UsersService ~ addOne ~ userExists:', userExists);
 
-    return {
-      message: 'Added new user',
-      username,
-    };
+      if (userExists[0].exists)
+        throw new HttpException('User Already Exists', HttpStatus.FORBIDDEN);
+
+      const hashedPassword = await hashPassword(password);
+
+      await this.sql`
+    INSERT INTO users (username, password)
+    VALUES(${username}, ${hashedPassword})`;
+
+      return {
+        message: 'Added new user',
+        username,
+      };
+    } catch (error) {
+      if (error instanceof HttpException)
+        throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 
   async getUserFromDb(): Promise<any> {
     return await this.sql`SELECT * FROM users`;
   }
 }
+
+const hashPassword = async (password: string): Promise<string> => {
+  try {
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    return await bcrypt.hash(password, salt);
+  } catch (error) {
+    if (error) throw new HttpException('Hash Error', HttpStatus.BAD_REQUEST);
+  }
+  return '';
+};

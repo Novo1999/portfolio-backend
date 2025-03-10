@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { config } from 'dotenv';
-import * as postgres from 'postgres';
+import postgres from 'postgres';
 
 config({
   path: ['.env', '.env.production', '.env.local'],
