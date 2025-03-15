@@ -17,12 +17,12 @@ export class BioService {
 
   async editUserBio(username: string, bio: string) {
     try {
-      const edited = await this.sql`
+      const editedBio = await this.sql`
       UPDATE bio
       SET bio = ${bio}
       WHERE username = ${username}
       RETURNING bio`;
-      return edited;
+      return editedBio;
     } catch (error) {
       if (error) throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
