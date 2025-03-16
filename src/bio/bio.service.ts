@@ -7,7 +7,7 @@ export class BioService {
   async getUserBio(username: string) {
     try {
       const bio = await this.sql`
-      SELECT bio FROM bio
+      SELECT bio, username FROM bio
       WHERE username = ${username}`;
       return bio;
     } catch (error) {
