@@ -3,8 +3,8 @@ import {
   Controller,
   Get,
   Param,
-  Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -21,7 +21,7 @@ export class ExperienceController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch(':id')
+  @Put(':id')
   async editExp(
     @Param() { id }: Record<string, string>,
     @Body() experience: ExperienceCreator,
