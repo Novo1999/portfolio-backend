@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppService } from 'src/app.service';
-import { DatabaseModule } from 'src/DbModule/db';
+import { DatabaseModule } from './DbModule/db';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
 import { ProjectsController } from './projects/projects.controller';
-import { ProjectsService } from './projects/projects.service';
 import { ProjectsModule } from './projects/projects.module';
+import { ProjectsService } from './projects/projects.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [DatabaseModule, AuthModule, UsersModule, ProjectsModule],
