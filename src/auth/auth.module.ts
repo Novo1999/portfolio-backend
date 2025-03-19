@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from 'src/auth/constants';
-import { BioModule } from 'src/bio/bio.module';
-import { ExperienceModule } from 'src/experience/experience.module';
-import { UsersModule } from 'src/users/users.module';
+import { BioModule } from '../bio/bio.module';
+import { ExperienceModule } from '../experience/experience.module';
+import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { jwtConstants } from './constants';
 
 @Module({
   imports: [

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
-import { User } from 'src/users/interfaces/users.interface';
+import { User } from './interfaces/users.interface';
 
 @Injectable()
 export class UsersService {

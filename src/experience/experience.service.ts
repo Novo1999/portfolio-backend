@@ -5,7 +5,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ExperienceCreator } from 'src/experience/experience.dto';
+import { ExperienceCreator } from './experience.dto';
 
 @Injectable()
 export class ExperienceService {

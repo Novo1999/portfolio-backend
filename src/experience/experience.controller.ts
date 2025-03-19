@@ -7,9 +7,9 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { ExperienceCreator } from 'src/experience/experience.dto';
-import { ExperienceService } from 'src/experience/experience.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { ExperienceCreator } from './experience.dto';
+import { ExperienceService } from './experience.service';
 
 @Controller('experience')
 export class ExperienceController {

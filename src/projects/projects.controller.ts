@@ -7,9 +7,9 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Project } from 'src/projects/project.dto';
-import { ProjectsService } from 'src/projects/projects.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { Project } from './project.dto';
+import { ProjectsService } from './projects.service';
 
 @Controller('projects')
 export class ProjectsController {

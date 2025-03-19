@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { BioService } from 'src/bio/bio.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { BioService } from './bio.service';
+
 
 @Controller('/bio')
 export class BioController {

@@ -5,7 +5,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Project } from 'src/projects/project.dto';
+import { Project } from './project.dto';
 
 @Injectable()
 export class ProjectsService {
